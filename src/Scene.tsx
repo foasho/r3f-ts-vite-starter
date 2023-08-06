@@ -1,7 +1,17 @@
 
-import { OrbitControls, Box } from "@react-three/drei";
+import React from "react";
+import { OrbitControls, Box, GizmoHelper, GizmoViewport } from "@react-three/drei";
 
-export const Scene = () => {
+interface SceneProps {
+  isGizmo?: boolean;
+  isOrbit?: boolean;
+}
+export const Scene = (
+  { 
+    isGizmo=true,
+    isOrbit=true
+  }:SceneProps
+) => {
 
   return (
     <>
@@ -11,7 +21,12 @@ export const Scene = () => {
       <Box rotation={[-Math.PI / 2, 0, 0]}>
         <meshStandardMaterial attach={"material"} color="orange" />
       </Box>
-      <OrbitControls />
+      {isOrbit && <OrbitControls />}
+      {isGizmo &&
+        <GizmoHelper alignment="top-right" margin={[75, 75]}>
+          <GizmoViewport labelColor="white" axisHeadScale={1} />
+        </GizmoHelper>
+      }
     </>
   )
 }
